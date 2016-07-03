@@ -1,49 +1,51 @@
 <!DOCTYPE html>
 <html>
-<!-- json_osmall_webgl a program by NGUYEN.Chung (2015) 
+<!-- json_osmall_webgl a program by NGUYEN.Chung (2015)
 openstreetmap roads to html5 array -->
 <head>
 <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
 </head>
 <body bgcolor="#FFFFFF" onunload="close();" onKeyUp="keyup(event);" onKeyDown="keydown(event);" >
 	<div id="mydiv" style="position:absolute;top:0px;left:0px;z-index:200;" >
-	<canvas id="canvas" style="border:none;top:0px;left:0px;" width="600" height="400"></canvas>
-    </div>
+		<canvas id="canvas" style="border:none;top:0px;left:0px;" width="600" height="400"></canvas>
+	</div>
 	<div id="mydiv2" style="position:absolute;top:0px;left:0px;z-index:100;" >
-	<canvas id="canvasgl" style="border:red 1px solid;top:0px;left:0px;" width="600" height="400"></canvas>
-	<br />
-	<button id="fullscreen"  onclick="sizescreen();">fullscreen</button>
-	<select id="combo" onChange="subcombo();" onblur="tfocus=1;waitkey=0;" onfocus="tfocus=0;waitkey=0;">
-          <option id="initial">initial</option>
-          <option id="deauville marinas">deauville marinas</option>
-          <option id="deauville plage">deauville plage</option>
-          <option id="trouville plage">trouville plage</option>
-          <option id="nancy">nancy</option>
-          <option id="crickvenica">crickvenica</option>
-          <option id="paris tolbiac">paris tolbiac</option>
-          <option id="paris defense">paris defense</option>
-          <option id="ivry romain roland">ivry romain roland</option>
-          <option id="orsay">orsay</option>
-          <option id="le barcares">le barcares</option>
-          <option id="jerusalem">jerusalem</option>
-          <option id="marseille">marseille</option>
-          <option id="nice">nice</option>
-          <option id="arcachon">arcachon</option>
-          <option id="grenoble">grenoble</option>
-          <option id="san francisco">san francisco</option>
-          <option id="new york">new york</option>
-          <option id="atlanta">atlanta</option>
-          <option id="rio">rio</option>
-          <option id="hong kong">hong kong</option>
-          <option id="athenes">athenes</option>
-          <option id="perth">perth</option>
-          <option id="le caire">le caire</option>
-          <option id="washington">washington</option>
-          <option id="tajmahal">tajmahal</option>
-     </select>
-	 <input type="text"  readonly="readonly" id="msg" maxlength="65" size="65" />
-     </div>
-<script src="https://maps.googleapis.com/maps/api/js?v=3" type="text/javascript" ></script>
+		<canvas id="canvasgl" style="border:red 1px solid;top:0px;left:0px;" width="600" height="400"></canvas>
+		<br />
+		<button id="fullscreen"  onclick="sizescreen();">fullscreen</button>
+		<select id="combo" onChange="subcombo();" onblur="tfocus=1;waitkey=0;" onfocus="tfocus=0;waitkey=0;">
+			<option id="initial">initial</option>
+			<option id="Sanitas Tours">Sanitas Tours</option>
+			<option id="deauville marinas">deauville marinas</option>
+			<option id="deauville plage">deauville plage</option>
+			<option id="trouville plage">trouville plage</option>
+			<option id="nancy">nancy</option>
+			<option id="crickvenica">crickvenica</option>
+			<option id="paris tolbiac">paris tolbiac</option>
+			<option id="paris defense">paris defense</option>
+			<option id="ivry romain roland">ivry romain roland</option>
+			<option id="orsay">orsay</option>
+			<option id="le barcares">le barcares</option>
+			<option id="jerusalem">jerusalem</option>
+			<option id="marseille">marseille</option>
+			<option id="nice">nice</option>
+			<option id="arcachon">arcachon</option>
+			<option id="grenoble">grenoble</option>
+			<option id="san francisco">san francisco</option>
+			<option id="new york">new york</option>
+			<option id="atlanta">atlanta</option>
+			<option id="rio">rio</option>
+			<option id="hong kong">hong kong</option>
+			<option id="athenes">athenes</option>
+			<option id="perth">perth</option>
+			<option id="le caire">le caire</option>
+			<option id="washington">washington</option>
+			<option id="tajmahal">tajmahal</option>
+		</select>
+		<input type="button" value="reload" onclick="subcombo()" />
+		<input type="text"  readonly="readonly" id="msg" maxlength="65" size="65" />
+	</div>
+<script src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyA9hK2lEmYMel53P17Ax6H5E952OSxiHdM" type="text/javascript" ></script>
 <script src="glMatrix-0.9.5.min.js"></script>
 <script src="webgl-utils.js"></script>
 <script src="base64binary.js"></script>
@@ -77,7 +79,7 @@ openstreetmap roads to html5 array -->
 		   gl_FragColor.r*=ucolor.r*r;
 		   gl_FragColor.g*=ucolor.g*g;
 		   gl_FragColor.b*=ucolor.b*b;
-		 }}		 		
+		 }}
     }
 </script>
 <script id="shader-vs" type="x-shader/x-vertex">
@@ -108,7 +110,8 @@ var url=http+overpass+"interpreter?data=[out:json];way[highway=motorway]%2850.74
 
 var wayjson,nodejson,ways,waynodes,nodes,waytype;
 var latnodes=[],lonnodes=[];
-var dlat=0.005,dlon=0.008;
+//var dlat=0.005,dlon=0.008;
+var dlat=0.002,dlon=0.004;
 var lat=48.765,lng=2.20;
 lat=48.826125291730506;lng=2.3570559500472212;
 var lat1=lat-dlat/2,lon1=lng-dlon/2;
@@ -136,7 +139,7 @@ function waycallback(r){//alert(r);
    waytype="none";
    if(way.tags){if(way.tags.highway){
       waytype=way.tags.highway;}}
-   msg+=waytype;*/	  
+   msg+=waytype;*/
    for(var j=0;j<way.nodes.length;j++){
       //if(i<2){msg+="/"+way.nodes[j];};
 	  nnode+=1;
@@ -158,15 +161,15 @@ function nodecallback(r){//alert(r);
 	  msg+=" lat="+nodes[i].lat;
 	  msg+=" lon="+nodes[i].lon;
 	  }
-	 var inode=nodes[i].id; 
+	 var inode=nodes[i].id;
 	 latnodes[inode]=nodes[i].lat;
-     lonnodes[inode]=nodes[i].lon;	 
+     lonnodes[inode]=nodes[i].lon;
 	 }
   //alert(msg);
-  
-     tdraw=1;//draw();	 
+
+     tdraw=1;//draw();
 }
-var loading=0,tdraw=0,klon=1; 
+var loading=0,tdraw=0,klon=1;
 function getways(){
 if(loading==1){return;}
 loading=1;
@@ -193,7 +196,7 @@ keyway="(way[building]"+latlon+";way[highway~'motorway|trunk|primary|secondary|t
 //keyway="way[highway~'motorway|trunk|primary|secondary|tertiary|unclassified|residential']"+latlon;
 //wayurl=http+overpass+"interpreter?data=[out:json];way"+keyway+"%28"+lat1+"%2C"+lon1+"%2C"+lat2+"%2C"+lon2+"%29%3Bout%20399%3B";
 wayurl=http+overpass+"interpreter?data=[out:json];"+keyway+"%3Bout%204999%3B";
-try{		
+try{
 httpGet(wayurl,waycallback);
 }catch (e){alert("error getways");loading=0;}
 }
@@ -207,7 +210,7 @@ var lat11=lat1-dx,lon11=lon1-dx;
 var lat21=lat2+dx,lon21=lon2+dx;
 nodeurl=http+overpass+"interpreter?data=[out:json];node%28"+lat11+"%2C"+lon11+"%2C"+lat21+"%2C"+lon21+"%29%3Bout%20skel%2019999%3B";
 resetnode=1;tgetnode=1;
-try{		
+try{
 httpGet(nodeurl,nodecallback);
 }catch (e){alert("error getnodes");loading=0;}
 }
@@ -280,17 +283,17 @@ for(var i=0;i<ways.length;i++){
    context.beginPath();
    for(var j=0;j<way.nodes.length;j++){
      var inode=way.nodes[j];
-	 if(latnodes[inode]){  
+	 if(latnodes[inode]){
 	   var y=windy-windy*(latnodes[inode]-lat1)/(lat2-lat1);
 	   var x=windx*(lonnodes[inode]-lon1)/(lon2-lon1);
 	   if(j==0){context.moveTo(x,y);}
 	   else{context.lineTo(x,y);}
-	 }  
+	 }
    }
    context.stroke();
    if(waytype=="building"){
       context.fillStyle = '#dfefff';
-	  context.fill();}	  
+	  context.fill();}
    }}
    context.fillStyle = '#ff0000';
    context.fillText("lat="+lat1+" lon="+lon1,20,20);
@@ -367,11 +370,11 @@ if(tframe>tmsg+200){
    if(auxvar2!=null){msg+=" aux2="+auxvar2;}
    if(auxvar3!=null){msg+=" aux3="+auxvar3;}
    document.getElementById('msg').value=msg;
-   }  
-   
+   }
+
     if(o2>85){o2=84;o1=180+o1-o3;o3=180;};
     if(o2<-85){o2=-84;o1=180+o1+o3;o3=0;};
-	while(o1>180){o1-=360;} 
+	while(o1>180){o1-=360;}
 	while(o1<-180){o1+=360;}
 	while(o3>180){o3-=360;}
 	while(o3<-180){o3+=360;}
@@ -380,7 +383,7 @@ if(tframe>tmsg+200){
     cos3=Math.cos(degtorad(o3));sin3=Math.sin(degtorad(o3));
 }
 var x=0,y=0,z=0,o1=0,o2=-10,o3=0,vrun=1.10;
-var cos1=0,sin1=0,cos2=0,sin2=0,cos3=0,sin3=0,do1=0,do2=0,do3=0; 
+var cos1=0,sin1=0,cos2=0,sin2=0,cos3=0,sin3=0,do1=0,do2=0,do3=0;
 var xmin=-30000,xmax=30000,ymin=-30000,ymax=30000;
 
     var tframe=0,tframe0=0,tfps=30,fps=10,dtime=1,tmsg=0,clearr,clearg,clearb,tskip=0;
@@ -421,18 +424,22 @@ var xmin=-30000,xmax=30000,ymin=-30000,ymax=30000;
            if(quit==0 && testloop==0){testloop=1;requestAnimFrame(tick);
 		     }else{testloop=0;};}
     }
+
 //getways();
 document.getElementById('msg').focus();
 document.getElementById('msg').value="arrow keys => move";
 
 var icombo=0,combotext="";
 var flytolat=48.82612529173,flytolng=2.3570559500472;
-var flytoname="initial";
-function subcombo(){
+var flytoname="Sanitas Tours";
+
+function subcombo()
+{
 icombo=document.getElementById('combo').selectedIndex;
 combotext = document.getElementById('combo')[icombo].id ;
 var o1=0;
 lat=flytolat;lng=flytolng;
+if (combotext=="Sanitas Tours"){lat=47.3798   ;lng=0.6992   ;o1=120;}
 if (combotext=="deauville marinas"){lat=49.36198047661674   ;lng=0.07262960190958628   ;o1=120;}
 if (combotext=="deauville plage"){lat=49.35600551121942   ;lng=0.06075459446313726   ;o1=110;}
 if (combotext=="trouville plage"){lat=49.36663106706898   ;lng=0.07818353983048315   ;o1=130;}
@@ -442,7 +449,7 @@ if (combotext=="paris tolbiac"){lat=48.826125291730506   ;lng=2.3570559500472212
 if (combotext=="paris defense"){lat=48.891977155490395   ;lng=2.237673523003608   ;o1=160;}
 if (combotext=="ivry romain roland"){lat=48.80346335679542   ;lng=2.3934673532940915   ;o1=-50;}
 if (combotext=="orsay"){lat=48.706787   ;lng=2.180894999999964   ;o1=-30;}
-if (combotext=="le barcares"){lat=42.78764305091493   ;lng=3.0338932951133533   ;o1=175;} 
+if (combotext=="le barcares"){lat=42.78764305091493   ;lng=3.0338932951133533   ;o1=175;}
 if (combotext=="jerusalem"){lat=31.776636707589287   ;lng=35.2337121963501   ;o1=36.3920;}
 if (combotext=="marseille"){lat=43.2803905;lng=5.405139   ;o1=36.3920;}
 if (combotext=="nice"){lat=43.7031905;lng=7.252817  ;o1=36.3920;}
@@ -463,7 +470,7 @@ latx=lat;lngx=lng;tmap=0;
 getways();
 }
 var xmlhttp;
-function httpGet(url,callback) 
+function httpGet(url,callback)
 {
   xmlhttp = new XMLHttpRequest();
   if ("withCredentials" in xmlhttp) {
@@ -490,7 +497,7 @@ function httpGet(url,callback)
         }
     }
     //xmlhttp.open("GET", theUrl, false);
-    xmlhttp.send();    
+    xmlhttp.send();
 }
 function degtorad(degrees) {
     return degrees * Math.PI / 180;
@@ -547,7 +554,7 @@ function initGL(canvasgl){
     function initShaders() {
         var fragmentShader = getShader(gl, "shader-fs");
         var vertexShader = getShader(gl, "shader-vs");
-	
+
         shaderProgram = gl.createProgram();
         gl.attachShader(shaderProgram, vertexShader);
         gl.attachShader(shaderProgram, fragmentShader);
@@ -622,13 +629,13 @@ function initGL(canvasgl){
 
     var towerTexture,roadTexture,solTexture;
 	var houseTexture,roofTexture;
-	
+
     function gldeleteTexture(texture){
 	    if(texture){gl.deleteTexture(texture);
 		            texture.image.src=null;
 	                };}
 	function deletetextures(){
-        //cancelRequestAnimationFrame(); 
+        //cancelRequestAnimationFrame();
 	    for(var i=1;i<=itexturelist;i++){
 		   gldeleteTexture(texturelist[i]);
 		}
@@ -640,7 +647,7 @@ function initGL(canvasgl){
 			handleLoadedTexture(roadTexture);
         }
         roadTexture.image.src = "road.bmp";
-		
+
         towerTexture = gl.createTexture();
         towerTexture.image = new Image();
         towerTexture.image.onload = function () {
@@ -670,10 +677,10 @@ function initGL(canvasgl){
         }
         updatesoltexture();
 		//solTexture.image.src = "map2.jpg";
-		
+
         }
 
-var tupdatesoltexture=0;		
+var tupdatesoltexture=0;
 function updatesoltexture(){
 		var lat000=lat,lng000=lng;
 		latsol=lat;lngsol=lng;
@@ -687,28 +694,31 @@ function updatesoltexture(){
 
 var latsol=lat,lngsol=lng,dlatsol=1,dlngsol=1;
 var latsol0=lat,lngsol0=lng;
-function getmap(zoom,lat,lng,size,type0,scale){
-var type=type0;
-if(type=="jpg"){type="jpg-baseline";}
-var mapstyle="&style=feature:road%7Cvisibility:off&style=element:labels%7Cvisibility:off&style=element:geometry.stroke%7Cvisibility:off";
-return "https://maps.googleapis.com/maps/api/staticmap?center="+lat+","+lng+"&zoom="+zoom+"&scale="+scale+"&size="+size+"x"+size+"&maptype=satellite&format="+type+mapstyle;
+
+function getmap(zoom,lat,lng,size,type0,scale)
+{
+	var type=type0;
+	if(type=="jpg"){type="jpg-baseline";}
+	var mapstyle="&style=feature:road%7Cvisibility:off&style=element:labels%7Cvisibility:off&style=element:geometry.stroke%7Cvisibility:off";
+	return "https://maps.googleapis.com/maps/api/staticmap?key=AIzaSyA9hK2lEmYMel53P17Ax6H5E952OSxiHdM&center="+lat+","+lng+"&zoom="+zoom+"&scale="+scale+"&size="+size+"x"+size+"&maptype=satellite&format="+type+mapstyle;
 }
-    var mvMatrix = mat4.create();
-    var mvMatrixStack = [];
-    var pMatrix = mat4.create();
 
-    function mvPushMatrix() {
-        var copy = mat4.create();
-        mat4.set(mvMatrix, copy);
-        mvMatrixStack.push(copy);
-    }
+var mvMatrix = mat4.create();
+var mvMatrixStack = [];
+var pMatrix = mat4.create();
 
-    function mvPopMatrix() {
-        if (mvMatrixStack.length == 0) {
-            throw "Invalid popMatrix!";
-        }
-        mvMatrix = mvMatrixStack.pop();
+function mvPushMatrix() {
+    var copy = mat4.create();
+    mat4.set(mvMatrix, copy);
+    mvMatrixStack.push(copy);
+}
+
+function mvPopMatrix() {
+    if (mvMatrixStack.length == 0) {
+        throw "Invalid popMatrix!";
     }
+    mvMatrix = mvMatrixStack.pop();
+}
 
 	 var colorr=1.0,colorg=1.0,colorb=1.0,colora=1.0;
      function setMatrixUniforms() {
@@ -731,14 +741,14 @@ return "https://maps.googleapis.com/maps/api/staticmap?center="+lat+","+lng+"&zo
 		   return;
 		   //mat4.lookAt([x,y,z+200.5],[x+cos1*cos2,y+sin1*cos2,z+sin2+0.5],[0,0,1],mvMatrix);
 		}
-		   
+
 		gl.useProgram(shaderProgram);
 		drawroads();
 		drawtowers();
 		drawroofs();
 		drawbouss();
 		drawsol();
-		
+
 		}
 function drawroads(){
     mvPushMatrix();
@@ -826,8 +836,8 @@ function drawsol(){
 //ysol=parseInt(y/100)*100;
 xsol=((lngsol0-lng0)/klon)*scale;
 ysol=(latsol0-lat0)*scale;
-   
-	
+
+
 	mvPushMatrix();
     //mat4.identity(mvMatrix);
 	mat4.translate(mvMatrix, [xsol,ysol,zsol]);
@@ -865,7 +875,7 @@ ysol=(latsol0-lat0)*scale;
 	     tab[index]=values[i];index+=1;
 	  }
 	}
-    
+
 	var roadVertexPositionBuffer;
 	var roadVertexTextureCoordBuffer;
 	var roadvertices,roadtextureCoords;
@@ -893,21 +903,21 @@ ysol=(latsol0-lat0)*scale;
 		   append(roadvertices,[
              px,py,pz
             ]);
-		   
-		}		
+
+		}
         gl.bufferData(gl.ARRAY_BUFFER, (roadvertices), gl.STATIC_DRAW);
         roadVertexPositionBuffer.itemSize = 3;
         roadVertexPositionBuffer.numItems = maxvertice;
-	
+
         roadVertexTextureCoordBuffer = gl.createBuffer();
         gl.bindBuffer(gl.ARRAY_BUFFER, roadVertexTextureCoordBuffer);
         roadtextureCoords = new Float32Array(2*maxvertice);
 		index=0;
 		for (var i=0;i<maxvertice;i++) {
 		   append(roadtextureCoords,[
-             0,0        
+             0,0
 			 ]);
-		}	
+		}
         gl.bufferData(gl.ARRAY_BUFFER, (roadtextureCoords), gl.STATIC_DRAW);
         roadVertexTextureCoordBuffer.itemSize = 2;
         roadVertexTextureCoordBuffer.numItems = maxvertice;//24;
@@ -921,21 +931,21 @@ ysol=(latsol0-lat0)*scale;
 		   append(towervertices,[
              px,py,pz
             ]);
-		   
-		}		
+
+		}
         gl.bufferData(gl.ARRAY_BUFFER, (towervertices), gl.STATIC_DRAW);
         towerVertexPositionBuffer.itemSize = 3;
         towerVertexPositionBuffer.numItems = maxvertice;
-	
+
         towerVertexTextureCoordBuffer = gl.createBuffer();
         gl.bindBuffer(gl.ARRAY_BUFFER, towerVertexTextureCoordBuffer);
         towertextureCoords = new Float32Array(2*maxvertice);
 		index=0;
 		for (var i=0;i<maxvertice;i++) {
 		   append(towertextureCoords,[
-             0,0        
+             0,0
 			 ]);
-		}	
+		}
         gl.bufferData(gl.ARRAY_BUFFER, (towertextureCoords), gl.STATIC_DRAW);
         towerVertexTextureCoordBuffer.itemSize = 2;
         towerVertexTextureCoordBuffer.numItems = maxvertice;//24;
@@ -947,13 +957,13 @@ ysol=(latsol0-lat0)*scale;
 		index=0;
 		   append(solvertices,[
              -px,-py,pz, px,-py,pz, -px,py,pz,
-              px,-py,pz, px,py,pz,  -px,py,pz  			 
+              px,-py,pz, px,py,pz,  -px,py,pz
             ]);
-		   
+
         gl.bufferData(gl.ARRAY_BUFFER, (solvertices), gl.STATIC_DRAW);
         solVertexPositionBuffer.itemSize = 3;
         solVertexPositionBuffer.numItems = 6;
-	
+
         solVertexTextureCoordBuffer = gl.createBuffer();
         gl.bindBuffer(gl.ARRAY_BUFFER, solVertexTextureCoordBuffer);
         soltextureCoords = new Float32Array(2*6);
@@ -961,8 +971,8 @@ ysol=(latsol0-lat0)*scale;
 		var s1=1;
 	    append(soltextureCoords,[
              0,0, s1,0, 0,s1,
-             s1,0, s1,s1, 0,s1			 
-			 ]);	
+             s1,0, s1,s1, 0,s1
+			 ]);
         gl.bufferData(gl.ARRAY_BUFFER, (soltextureCoords), gl.STATIC_DRAW);
         solVertexTextureCoordBuffer.itemSize = 2;
         solVertexTextureCoordBuffer.numItems = 6;
@@ -976,21 +986,21 @@ ysol=(latsol0-lat0)*scale;
 		   append(housevertices,[
              px,py,pz
             ]);
-		   
-		}		
+
+		}
         gl.bufferData(gl.ARRAY_BUFFER, (housevertices), gl.STATIC_DRAW);
         houseVertexPositionBuffer.itemSize = 3;
         houseVertexPositionBuffer.numItems = maxvertice;
-	
+
         houseVertexTextureCoordBuffer = gl.createBuffer();
         gl.bindBuffer(gl.ARRAY_BUFFER, houseVertexTextureCoordBuffer);
         housetextureCoords = new Float32Array(2*maxvertice);
 		index=0;
 		for (var i=0;i<maxvertice;i++) {
 		   append(housetextureCoords,[
-             0,0        
+             0,0
 			 ]);
-		}	
+		}
         gl.bufferData(gl.ARRAY_BUFFER, (housetextureCoords), gl.STATIC_DRAW);
         houseVertexTextureCoordBuffer.itemSize = 2;
         houseVertexTextureCoordBuffer.numItems = maxvertice;//24;
@@ -1004,21 +1014,21 @@ ysol=(latsol0-lat0)*scale;
 		   append(roofvertices,[
              px,py,pz
             ]);
-		   
-		}		
+
+		}
         gl.bufferData(gl.ARRAY_BUFFER, (roofvertices), gl.STATIC_DRAW);
         roofVertexPositionBuffer.itemSize = 3;
         roofVertexPositionBuffer.numItems = maxvertice;
-	
+
         roofVertexTextureCoordBuffer = gl.createBuffer();
         gl.bindBuffer(gl.ARRAY_BUFFER, roofVertexTextureCoordBuffer);
         rooftextureCoords = new Float32Array(2*maxvertice);
 		index=0;
 		for (var i=0;i<maxvertice;i++) {
 		   append(rooftextureCoords,[
-             0,0        
+             0,0
 			 ]);
-		}	
+		}
         gl.bufferData(gl.ARRAY_BUFFER, (rooftextureCoords), gl.STATIC_DRAW);
         roofVertexTextureCoordBuffer.itemSize = 2;
         roofVertexTextureCoordBuffer.numItems = maxvertice;//24;
@@ -1120,16 +1130,16 @@ for(var i=0;i<ways.length;i++){
             ]);
 			itextroad=index;
 		   }
-	 }  
+	 }
    }
    //context.stroke();
    }}
-   
+
    gl.bindBuffer(gl.ARRAY_BUFFER, roadVertexPositionBuffer);
    gl.bufferData(gl.ARRAY_BUFFER, (roadvertices), gl.STATIC_DRAW);
    roadVertexPositionBuffer.itemSize = 3;
    roadVertexPositionBuffer.numItems = indexroad/3;
-	
+
    gl.bindBuffer(gl.ARRAY_BUFFER, roadVertexTextureCoordBuffer);
    gl.bufferData(gl.ARRAY_BUFFER, (roadtextureCoords), gl.STATIC_DRAW);
    roadVertexTextureCoordBuffer.itemSize = 2;
@@ -1139,17 +1149,17 @@ for(var i=0;i<ways.length;i++){
    gl.bufferData(gl.ARRAY_BUFFER, (towervertices), gl.STATIC_DRAW);
    towerVertexPositionBuffer.itemSize = 3;
    towerVertexPositionBuffer.numItems = indextower/3;
-	
+
    gl.bindBuffer(gl.ARRAY_BUFFER, towerVertexTextureCoordBuffer);
    gl.bufferData(gl.ARRAY_BUFFER, (towertextureCoords), gl.STATIC_DRAW);
    towerVertexTextureCoordBuffer.itemSize = 2;
    towerVertexTextureCoordBuffer.numItems = itexttower/2;
-   
+
    /*gl.bindBuffer(gl.ARRAY_BUFFER, houseVertexPositionBuffer);
    gl.bufferData(gl.ARRAY_BUFFER, (housevertices), gl.STATIC_DRAW);
    houseVertexPositionBuffer.itemSize = 3;
    houseVertexPositionBuffer.numItems = indexhouse/3;
-	
+
    gl.bindBuffer(gl.ARRAY_BUFFER, houseVertexTextureCoordBuffer);
    gl.bufferData(gl.ARRAY_BUFFER, (housetextureCoords), gl.STATIC_DRAW);
    houseVertexTextureCoordBuffer.itemSize = 2;
@@ -1159,15 +1169,15 @@ for(var i=0;i<ways.length;i++){
    gl.bufferData(gl.ARRAY_BUFFER, (roofvertices), gl.STATIC_DRAW);
    roofVertexPositionBuffer.itemSize = 3;
    roofVertexPositionBuffer.numItems = indexroof/3;
-	
+
    gl.bindBuffer(gl.ARRAY_BUFFER, roofVertexTextureCoordBuffer);
    gl.bufferData(gl.ARRAY_BUFFER, (rooftextureCoords), gl.STATIC_DRAW);
    roofVertexTextureCoordBuffer.itemSize = 2;
    roofVertexTextureCoordBuffer.numItems = itextroof/2;
-   
+
    //lat0=lat;lng0=lng;
    x0=x;y0=y;
-   
+
    context.font = "12pt Arial";
    context.fillStyle = '#ff0000';
    var latt=parseInt(lat*10000)/10000;
@@ -1206,7 +1216,7 @@ function addtower(way){
 	   ymid=(yy+yyy)/2;
 	   zmid=0;
    }
-if(h>3){//tower   
+if(h>3){//tower
    var jstart=0;
    for(var j=0;j<=jmax;j++){
      var inode=way.nodes[j];
@@ -1243,7 +1253,7 @@ if(h>3){//tower
             ]);
 			itexttower=index;
 		   }
-	 }  
+	 }
    }
 }else if(larg>12*h){//commercial
    var jstart=0;
@@ -1282,7 +1292,7 @@ if(h>3){//tower
             ]);
 			itexttower=index;
 		   }
-	 }  
+	 }
    }
 }else{//house
    var jstart=0;
@@ -1327,7 +1337,7 @@ if(h>3){//tower
             ]);
 			itexttower=index;
 		   }
-	 }  
+	 }
    }
    xmid=(xxmin+xxmax)/2;
    ymid=(yymin+yymax)/2;
@@ -1383,7 +1393,7 @@ function MercatorLatLngtoPoint(lat,lng) {
   // NOTE(appleton): Truncating to 0.9999 effectively limits latitude to
   // 89.189.  This is about a third of a tile past the edge of the world tile.
   var siny=Math.min(Math.max(Math.sin(degreesToRadians(lat)),-0.9999),0.9999);
-  pointy = pixeloriginy+0.5*Math.log((1+siny)/(1-siny))*pixelsPerLonRadian;  
+  pointy = pixeloriginy+0.5*Math.log((1+siny)/(1-siny))*pixelsPerLonRadian;
 };
 
 function MercatorPointtoLatLng(pointx,pointy) {
@@ -1400,7 +1410,7 @@ function getworldxy(zoom,lat,lng){
 MercatorLatLngtoPoint(lat,lng);
 worldx=pointx*Math.pow(2,zoom);
 worldy=pointy*Math.pow(2,zoom);
-}	 
+}
 var fullscreen=0;
 function sizescreen(){
 	    if(fullscreen==0){fullscreen=1;
